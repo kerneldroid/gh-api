@@ -84,15 +84,15 @@ Your report MUST contain:
 4. Security Audit: Specifically highlight any leaked email addresses found in the latest commits (e.g. personal @gmail.com or other domains, while @proton.me or noreply are acceptable). Explicitly warn if a real email leak is detected.
 5. Overall Recommendations: Strategic tips to improve the repo's structure, README, CI/CD, or community engagement.
 
-Respond in Russian (as requested by the developer), using professional, direct, and precise technical language. Use clear markdown formatting, code highlights, and bullet points.
+Respond in English, using professional, direct, and precise technical language. Use clear markdown formatting, code highlights, and bullet points.
   `;
 
   const prompt = `
-Анализируй этот репозиторий: ${repoOwner}/${repoName}.
-Вот извлеченные данные:
+Analyze this repository: ${repoOwner}/${repoName}.
+Here is the extracted data:
 ${JSON.stringify(contextData, null, 2)}
 
-Вот фрагмент README:
+Here is the README snippet:
 \`\`\`markdown
 ${readmeSnippet}
 \`\`\`

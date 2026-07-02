@@ -38,7 +38,7 @@
 
 <div class="repo-data-container">
   <div class="navigation-tabs">
-    <ConnectedButtons>
+    <div class="tabs-list">
       <Button variant={activeSection === "overview" ? "filled" : "tonal"} onclick={() => activeSection = "overview"}>Overview</Button>
       {#if data.commits}
         <Button variant={activeSection === "commits" ? "filled" : "tonal"} onclick={() => activeSection = "commits"}>Commits</Button>
@@ -55,7 +55,7 @@
       {#if data.readme}
         <Button variant={activeSection === "readme" ? "filled" : "tonal"} onclick={() => activeSection = "readme"}>README</Button>
       {/if}
-    </ConnectedButtons>
+    </div>
   </div>
 
   <div class="section-content">
@@ -269,25 +269,28 @@
     width: 100%;
   }
 
-  .navigation-tabs > :global(.m3-container) {
-    max-width: 100%;
+  .tabs-list {
+    display: flex;
+    gap: 0.5rem;
     flex-wrap: wrap;
     justify-content: center;
+    width: 100%;
   }
 
   .overview-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
+    gap: 1.25rem;
     margin-bottom: 1.5rem;
   }
 
-  .stat-card {
-    display: flex;
-    align-items: center;
-    gap: 1.25rem;
-    padding: 1.25rem;
-    border-radius: var(--m3-shape-large);
+  :global(.stat-card) {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 1.25rem !important;
+    padding: 1.25rem !important;
+    border-radius: var(--m3-shape-large) !important;
   }
 
   .stat-icon {
@@ -407,12 +410,12 @@
     gap: 1rem;
   }
 
-  .commit-card {
-    padding: 1.25rem;
-    border-radius: var(--m3-shape-medium);
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  :global(.commit-card) {
+    padding: 1.25rem !important;
+    border-radius: var(--m3-shape-medium) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.5rem !important;
   }
 
   .commit-header {
@@ -458,12 +461,12 @@
     gap: 1rem;
   }
 
-  .release-card {
-    padding: 1.5rem;
-    border-radius: var(--m3-shape-large);
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+  :global(.release-card) {
+    padding: 1.5rem !important;
+    border-radius: var(--m3-shape-large) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.75rem !important;
   }
 
   .release-header-row {
@@ -596,20 +599,20 @@
     gap: 0.75rem;
   }
 
-  .item-card {
-    padding: 1rem;
-    border-radius: var(--m3-shape-medium);
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
+  :global(.item-card) {
+    padding: 1rem !important;
+    border-radius: var(--m3-shape-medium) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.35rem !important;
   }
 
-  .item-card.border-open {
-    border-left: 4px solid var(--m3c-primary);
+  :global(.item-card.border-open) {
+    border-left: 4px solid var(--m3c-primary) !important;
   }
 
-  .item-card.border-closed {
-    border-left: 4px solid var(--m3c-outline);
+  :global(.item-card.border-closed) {
+    border-left: 4px solid var(--m3c-outline) !important;
   }
 
   .item-header {
@@ -671,12 +674,12 @@
     gap: 0.75rem;
   }
 
-  .discussion-card {
-    padding: 1rem;
-    border-radius: var(--m3-shape-medium);
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
+  :global(.discussion-card) {
+    padding: 1rem !important;
+    border-radius: var(--m3-shape-medium) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.35rem !important;
   }
 
   .discussion-header {
@@ -708,12 +711,12 @@
     color: var(--m3c-on-surface-variant);
   }
 
-  .readme-card {
-    padding: 1.5rem;
-    border-radius: var(--m3-shape-large);
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+  :global(.readme-card) {
+    padding: 1.5rem !important;
+    border-radius: var(--m3-shape-large) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
   }
 
   .readme-pre {
