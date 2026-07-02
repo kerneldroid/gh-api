@@ -81,8 +81,15 @@
       // Inline code: `code`
       result = result.replace(/`(.*?)`/g, '<code>$1</code>');
       
-      // Links: [text](url)
-      result = result.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+      // Links: [text](url) — only allow safe protocols (http, https, mailto)
+      result = result.replace(/\[(.*?)\]\((.*?)\)/g, (_match: string, text: string, url: string) => {
+        const trimmedUrl = url.trim().toLowerCase();
+        if (trimmedUrl.startsWith('http://') || trimmedUrl.startsWith('https://') || trimmedUrl.startsWith('mailto:')) {
+          return `<a href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+        }
+        // Reject javascript:, data:, vbscript:, and other unsafe protocols
+        return text;
+      });
       
       return result;
     }

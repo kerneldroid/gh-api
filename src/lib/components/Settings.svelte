@@ -32,6 +32,17 @@
 
 <div class="settings-container">
   <div class="settings-section">
+    <Card variant="filled">
+      <div class="security-warning-banner">
+        <span class="warning-icon">⚠️</span>
+        <p>
+          API keys are stored in your browser's localStorage. Never use this tool on shared or public computers. For maximum security, use tokens with minimal required permissions and rotate them regularly.
+        </p>
+      </div>
+    </Card>
+  </div>
+
+  <div class="settings-section">
     <Card variant="outlined">
       <div class="card-header">
         <h3>API Credentials</h3>
@@ -172,6 +183,31 @@
     width: 100%;
     padding: 1.5rem;
     border-radius: var(--m3-shape-large);
+  }
+
+  .security-warning-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .security-warning-banner :global(.m3-container) {
+    background-color: var(--m3c-error-container) !important;
+    border: 1px solid var(--m3c-error) !important;
+  }
+
+  .warning-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .security-warning-banner p {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--m3c-on-error-container);
+    font-weight: 500;
   }
 
   .card-header {

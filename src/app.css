@@ -3,7 +3,19 @@
 @import "m3-svelte/etc/styles.css";
 @import "m3-svelte/etc/recommended-styles.css";
 
-/* Define Material 3 density helper function for the mixins compiler */
+/*
+ * CSS Custom Function: --m3-density(--size)
+ *
+ * This is NOT dead code — it is a required passthrough function consumed by
+ * m3-svelte's internal component styles (Button, TextField, Select, ListItem,
+ * etc.). Those components call `--m3-density(2.5rem)` and similar in their
+ * `height` declarations. Without this definition the CSS Functions API
+ * resolution fails and components render with zero/auto height.
+ *
+ * The identity implementation (`result: var(--size)`) passes sizes through
+ * unchanged. To implement Material 3 density scaling in the future, replace
+ * the body with arithmetic that subtracts a density offset.
+ */
 @function --m3-density(--size) {
   result: var(--size);
 }
@@ -31,6 +43,31 @@ body {
   transition: background-color 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), 
               color 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+
+/* ==========================================================================
+ * m3-svelte Material 3 Spec Dimension Overrides
+ * ==========================================================================
+ *
+ * WHY THESE OVERRIDES EXIST:
+ * The m3-svelte component library does not enforce Material Design 3
+ * specification dimensions out of the box. Components like TextField,
+ * Select, Button, Switch, and ListItem render with inconsistent or
+ * browser-default sizing that deviates from the M3 spec:
+ *
+ *   - Text fields / Selects should be 56px tall (M3 spec)
+ *   - Buttons should be 40px tall with 20px border-radius
+ *   - List items have specific line-height tiers (56/72/88px)
+ *   - Switch handle checked-state positioning is off
+ *
+ * Because m3-svelte applies styles via Svelte scoped CSS, the only
+ * reliable way to override from a consuming app is with `!important`.
+ * Scoped styles in child components have higher specificity than
+ * unscoped app-level selectors, so without `!important` these
+ * corrections are silently ignored.
+ *
+ * If m3-svelte adds built-in density/dimension props in the future,
+ * these overrides should be removed in favor of the library API.
+ * ========================================================================== */
 
 /* Ensure Select/TextField containers have correct height and relative positioning */
 .m3-container:has(> select) {
