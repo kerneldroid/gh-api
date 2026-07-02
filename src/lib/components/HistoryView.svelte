@@ -19,7 +19,7 @@
   }>();
 
   function formatTimestamp(t: string): string {
-    // Format: YYYY-MM-DD HH:mm:ss
+
     try {
       const parts = t.split("_");
       if (parts.length === 2) {
@@ -49,7 +49,7 @@
     <div class="records-list">
       {#each records as record (record.id)}
         <Card variant="outlined" class="record-card">
-          <!-- Absolute delete button in the top-right corner of the card -->
+
           <Button variant="text" onclick={() => ondeleteRecord(record.id)} class="delete-icon-btn" aria-label="Delete Record">
             <Icon icon={iconDelete} size={18} />
           </Button>

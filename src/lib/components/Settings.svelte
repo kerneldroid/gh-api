@@ -3,6 +3,7 @@
   import type { ExtractionOptions } from "../github";
   import { toastState } from "../toast.svelte";
   import iconSave from "@ktibow/iconset-material-symbols/save";
+  import iconWarning from "@ktibow/iconset-material-symbols/warning";
 
   let {
     githubToken = $bindable(),
@@ -34,7 +35,7 @@
   <div class="settings-section">
     <Card variant="filled">
       <div class="security-warning-banner">
-        <span class="warning-icon">⚠️</span>
+        <div class="warning-icon"><Icon icon={iconWarning} size={22} /></div>
         <p>
           API keys are stored in your browser's localStorage. Never use this tool on shared or public computers. For maximum security, use tokens with minimal required permissions and rotate them regularly.
         </p>

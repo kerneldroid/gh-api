@@ -13,7 +13,7 @@
     Divider
   } from "m3-svelte";
 
-  // Icons
+
   import iconSearch from "@ktibow/iconset-material-symbols/search";
   import iconHistory from "@ktibow/iconset-material-symbols/history";
   import iconSettings from "@ktibow/iconset-material-symbols/settings";
@@ -23,7 +23,7 @@
   import iconInfo from "@ktibow/iconset-material-symbols/info";
   import iconSecurity from "@ktibow/iconset-material-symbols/security";
 
-  // Helpers & state
+
   import { applyDefaultTheme, applyThemeFromAvatar } from "./lib/theme";
   import { fetchGithubData, parseRepoString, defaultOptions } from "./lib/github";
   import type { GithubRepoInfo, ExtractionOptions } from "./lib/github";
@@ -33,13 +33,13 @@
   import { exportAnalysisToZip } from "./lib/zipExporter";
   import { toastState } from "./lib/toast.svelte";
 
-  // Components
+
   import Settings from "./lib/components/Settings.svelte";
   import RepositoryData from "./lib/components/RepositoryData.svelte";
   import HistoryView from "./lib/components/HistoryView.svelte";
   import Toast from "./lib/components/Toast.svelte";
 
-  // State bindings
+
   let githubToken = $state("");
   let geminiKey = $state("");
   let selectedModel = $state("gemini-3.5-flash");
@@ -54,7 +54,7 @@
   let currentRecord = $state<AnalysisRecord | null>(null);
   let historyRecords = $state<AnalysisRecord[]>([]);
 
-  // Raw display toggles
+
   let showRawData = $state(false);
 
   function renderMarkdown(md: string): string {
@@ -70,24 +70,19 @@
     function parseInline(text: string): string {
       let result = escapeHtml(text);
       
-      // Bold: **text**
       result = result.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
       result = result.replace(/__(.*?)__/g, '<strong>$1</strong>');
       
-      // Italic: *text*
       result = result.replace(/\*(.*?)\*/g, '<em>$1</em>');
       result = result.replace(/_(.*?)_/g, '<em>$1</em>');
       
-      // Inline code: `code`
       result = result.replace(/`(.*?)`/g, '<code>$1</code>');
       
-      // Links: [text](url) — only allow safe protocols (http, https, mailto)
       result = result.replace(/\[(.*?)\]\((.*?)\)/g, (_match: string, text: string, url: string) => {
         const trimmedUrl = url.trim().toLowerCase();
         if (trimmedUrl.startsWith('http://') || trimmedUrl.startsWith('https://') || trimmedUrl.startsWith('mailto:')) {
           return `<a href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`;
         }
-        // Reject javascript:, data:, vbscript:, and other unsafe protocols
         return text;
       });
       
@@ -153,7 +148,6 @@
         const content = blockquoteLines.join("\n");
         const trimmed = content.trim();
         
-        // Detect if warning callout (contains warning keyword, security, error symbols or text)
         const isSecurityWarning = 
           trimmed.startsWith('[!WARNING]') || 
           trimmed.startsWith('[!CAUTION]') ||
@@ -293,7 +287,7 @@
     return html;
   }
 
-  // Load API configurations and history from storage
+
   onMount(() => {
     applyDefaultTheme();
 
@@ -312,7 +306,7 @@
 
     historyRecords = loadHistory();
 
-    // Restore last active record from history on reload
+
     const lastRecordId = localStorage.getItem("gh_api_current_record_id");
     if (lastRecordId) {
       const match = historyRecords.find(r => r.id === lastRecordId);
@@ -322,17 +316,17 @@
     }
   });
 
-  // Track options updates
+
   $effect(() => {
     localStorage.setItem("gh_api_options", JSON.stringify(options));
   });
 
-  // Persist activeTab selection across reload
+
   $effect(() => {
     localStorage.setItem("gh_api_active_tab", activeTab);
   });
 
-  // Persist currentRecord selection across reload
+
   $effect(() => {
     if (currentRecord) {
       localStorage.setItem("gh_api_current_record_id", currentRecord.id);
@@ -369,13 +363,11 @@
     const { owner, repo } = repoInfo;
 
     try {
-      // 1. Dynamic palette update using github avatar
       const avatarUrl = `https://avatars.githubusercontent.com/${owner}`;
       applyThemeFromAvatar(avatarUrl).catch(err => {
         console.warn("Theme application failed. Using default theme.", err);
       });
 
-      // 2. Fetch Github API repository data
       const extractedData = await fetchGithubData(
         owner,
         repo,
@@ -386,7 +378,6 @@
         }
       );
 
-      // 3. Trigger Gemini AI analysis
       statusMsg = "Generating AI Analysis with Gemini...";
       const analysisMarkdown = await analyzeWithGemini(
         owner,
@@ -396,7 +387,6 @@
         geminiKey.trim()
       );
 
-      // 4. Save analysis details
       const timestamp = formatDateString(new Date());
       const record: AnalysisRecord = {
         id: `checkout-${owner}-${repo}-${timestamp}`,
@@ -429,7 +419,6 @@
     showRawData = false;
     activeTab = "results";
 
-    // Set theme according to the chosen repo avatar
     const avatarUrl = `https://avatars.githubusercontent.com/${record.owner}`;
     applyThemeFromAvatar(avatarUrl).catch(err => console.warn(err));
   }
@@ -660,7 +649,6 @@
 <Toast />
 
 <style>
-  /* Main app container uses flexbox layout. Sidebar on left, Content on right */
   .app-layout {
     display: flex;
     flex-direction: row;
@@ -669,7 +657,6 @@
     color: var(--m3c-on-surface);
   }
 
-  /* Sidebar for PC */
   .pc-sidebar {
     height: 100vh;
     z-index: 50;
@@ -679,12 +666,10 @@
     flex-shrink: 0;
   }
 
-  /* Hide mobile nav bar on desktop */
   .mobile-nav-container {
     display: none;
   }
 
-  /* Content Area */
   .content-workspace {
     flex-grow: 1;
     padding: 2.5rem;
@@ -721,7 +706,6 @@
     color: var(--m3c-on-surface-variant);
   }
 
-  /* Repository Audit Setup */
   .search-form-card > :global(.m3-container) {
     padding: 2rem;
     border-radius: var(--m3-shape-large);

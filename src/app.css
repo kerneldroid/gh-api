@@ -3,19 +3,7 @@
 @import "m3-svelte/etc/styles.css";
 @import "m3-svelte/etc/recommended-styles.css";
 
-/*
- * CSS Custom Function: --m3-density(--size)
- *
- * This is NOT dead code — it is a required passthrough function consumed by
- * m3-svelte's internal component styles (Button, TextField, Select, ListItem,
- * etc.). Those components call `--m3-density(2.5rem)` and similar in their
- * `height` declarations. Without this definition the CSS Functions API
- * resolution fails and components render with zero/auto height.
- *
- * The identity implementation (`result: var(--size)`) passes sizes through
- * unchanged. To implement Material 3 density scaling in the future, replace
- * the body with arithmetic that subtracts a density offset.
- */
+/* Required by m3-svelte internal component height calculations */
 @function --m3-density(--size) {
   result: var(--size);
 }
@@ -44,32 +32,7 @@ body {
               color 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* ==========================================================================
- * m3-svelte Material 3 Spec Dimension Overrides
- * ==========================================================================
- *
- * WHY THESE OVERRIDES EXIST:
- * The m3-svelte component library does not enforce Material Design 3
- * specification dimensions out of the box. Components like TextField,
- * Select, Button, Switch, and ListItem render with inconsistent or
- * browser-default sizing that deviates from the M3 spec:
- *
- *   - Text fields / Selects should be 56px tall (M3 spec)
- *   - Buttons should be 40px tall with 20px border-radius
- *   - List items have specific line-height tiers (56/72/88px)
- *   - Switch handle checked-state positioning is off
- *
- * Because m3-svelte applies styles via Svelte scoped CSS, the only
- * reliable way to override from a consuming app is with `!important`.
- * Scoped styles in child components have higher specificity than
- * unscoped app-level selectors, so without `!important` these
- * corrections are silently ignored.
- *
- * If m3-svelte adds built-in density/dimension props in the future,
- * these overrides should be removed in favor of the library API.
- * ========================================================================== */
-
-/* Ensure Select/TextField containers have correct height and relative positioning */
+/* m3-svelte M3 spec overrides — library doesn't enforce correct dimensions */
 .m3-container:has(> select) {
   height: 56px !important;
   min-height: 56px !important;
@@ -96,7 +59,6 @@ body {
   pointer-events: none !important;
 }
 
-/* Fallback helpers for textfields to avoid manual overrides */
 .m3-container:has(> input:not([type="checkbox"]):not([type="radio"])) {
   height: 56px !important;
   min-height: 56px !important;
@@ -129,7 +91,6 @@ button.m3-container.filled:disabled, a.m3-container.filled:disabled {
   cursor: not-allowed !important;
 }
 
-/* Outlined buttons */
 button.m3-container.outlined, a.m3-container.outlined {
   height: 40px !important;
   min-height: 40px !important;
@@ -141,7 +102,6 @@ button.m3-container.outlined, a.m3-container.outlined {
   border: 1px solid var(--m3c-outline) !important;
 }
 
-/* Tonal buttons */
 button.m3-container.tonal, a.m3-container.tonal {
   height: 40px !important;
   min-height: 40px !important;
@@ -155,7 +115,6 @@ button.m3-container.tonal, a.m3-container.tonal {
   border: none !important;
 }
 
-/* Specific icon buttons padding alignment */
 button.m3-container.icon-left, a.m3-container.icon-left {
   padding-left: 16px !important;
   gap: 8px !important;
@@ -171,7 +130,6 @@ button.m3-container.icon-left, a.m3-container.icon-left {
   height: 88px !important;
 }
 
-/* Force checked Switch state positions and transitions */
 .m3-container > input[type="checkbox"][role="switch"]:checked + .handle {
   left: 1.75rem !important;
   scale: 1.5 !important;

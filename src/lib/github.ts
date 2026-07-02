@@ -153,7 +153,6 @@ async function handleResponseError(res: Response, fallbackMessage: string): Prom
     const errorJson = await res.json();
     errorDetail = errorJson.message || "";
   } catch {
-    // Ignore JSON parse errors for error details
   }
 
   const remaining = res.headers.get("X-RateLimit-Remaining");

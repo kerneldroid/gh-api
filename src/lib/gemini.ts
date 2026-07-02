@@ -133,7 +133,6 @@ ${readmeSnippet}
       try {
         errorMessage = await response.text();
       } catch {
-        // Ignore fallback reading errors
       }
     }
 

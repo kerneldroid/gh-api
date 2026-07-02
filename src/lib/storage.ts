@@ -1,10 +1,10 @@
 import type { GithubRepoInfo, ExtractionOptions } from "./github";
 
 export interface AnalysisRecord {
-  id: string; // e.g., checkout-owner-repo-2026-07-02_11-05-04
+  id: string;
   owner: string;
   repo: string;
-  timestamp: string; // ISO string or human-readable
+  timestamp: string;
   extractedData: Partial<GithubRepoInfo>;
   analysisMarkdown: string;
   options: ExtractionOptions;
@@ -34,7 +34,6 @@ export function saveHistory(records: AnalysisRecord[]): void {
 
 export function addRecord(record: AnalysisRecord): void {
   const history = loadHistory();
-  // Filter out any record with the same ID, just in case
   const updated = [record, ...history.filter(r => r.id !== record.id)];
   saveHistory(updated);
 }
@@ -46,7 +45,7 @@ export function deleteRecord(id: string): void {
 }
 
 export function formatDateString(date: Date): string {
-  // Format: YYYY-MM-DD_HH-mm-ss
+
   const pad = (n: number) => n.toString().padStart(2, "0");
   const y = date.getFullYear();
   const m = pad(date.getMonth() + 1);
