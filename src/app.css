@@ -1,0 +1,146 @@
+@import "@fontsource-variable/google-sans-flex/full.css";
+@import "@fontsource/google-sans-code/index.css";
+@import "m3-svelte/etc/styles.css";
+@import "m3-svelte/etc/recommended-styles.css";
+
+/* Define Material 3 density helper function for the mixins compiler */
+@function --m3-density(--size) {
+  result: var(--size);
+}
+
+:root {
+  --m3-font: "Google Sans Flex Variable", "Google Sans Flex", system-ui, sans-serif;
+  --m3-font-mono: "Google Sans Code", monospace;
+  
+  @apply --m3-body-large;
+  background-color: var(--m3c-surface);
+  color: var(--m3c-on-surface);
+  font-family: var(--m3-font);
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+  font-variation-settings: "ROND" 100;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  transition: background-color 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), 
+              color 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Ensure Select/TextField containers have correct height and relative positioning */
+.m3-container:has(> select) {
+  height: 56px !important;
+  min-height: 56px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+.m3-container > select {
+  height: 100% !important;
+  min-height: 56px !important;
+  width: 100% !important;
+  padding-top: 1.25rem !important;
+  padding-bottom: 0.25rem !important;
+  box-sizing: border-box !important;
+}
+
+.m3-container:has(> select) > label {
+  position: absolute !important;
+  top: 6px !important;
+  left: 16px !important;
+  font-size: 0.75rem !important;
+  transform: none !important;
+  pointer-events: none !important;
+}
+
+/* Fallback helpers for textfields to avoid manual overrides */
+.m3-container:has(> input:not([type="checkbox"]):not([type="radio"])) {
+  height: 56px !important;
+  min-height: 56px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.m3-container > input:not([type="checkbox"]):not([type="radio"]) {
+  height: 100% !important;
+  min-height: 56px !important;
+}
+
+button.m3-container.filled, a.m3-container.filled {
+  height: 40px !important;
+  min-height: 40px !important;
+  padding: 0 24px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 20px !important;
+  background-color: var(--m3c-primary) !important;
+  color: var(--m3c-on-primary) !important;
+  border: none !important;
+}
+
+button.m3-container.filled:disabled, a.m3-container.filled:disabled {
+  background-color: color-mix(in srgb, var(--m3c-on-surface) 12%, transparent) !important;
+  color: color-mix(in srgb, var(--m3c-on-surface) 38%, transparent) !important;
+  border: none !important;
+  cursor: not-allowed !important;
+}
+
+/* Outlined buttons */
+button.m3-container.outlined, a.m3-container.outlined {
+  height: 40px !important;
+  min-height: 40px !important;
+  padding: 0 24px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 20px !important;
+  border: 1px solid var(--m3c-outline) !important;
+}
+
+/* Tonal buttons */
+button.m3-container.tonal, a.m3-container.tonal {
+  height: 40px !important;
+  min-height: 40px !important;
+  padding: 0 24px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 20px !important;
+  background-color: var(--m3c-secondary-container) !important;
+  color: var(--m3c-on-secondary-container) !important;
+  border: none !important;
+}
+
+/* Specific icon buttons padding alignment */
+button.m3-container.icon-left, a.m3-container.icon-left {
+  padding-left: 16px !important;
+  gap: 8px !important;
+}
+
+.m3-container.lines-1 {
+  height: 56px !important;
+}
+.m3-container.lines-2 {
+  height: 72px !important;
+}
+.m3-container.lines-3 {
+  height: 88px !important;
+}
+
+/* Force checked Switch state positions and transitions */
+.m3-container > input[type="checkbox"][role="switch"]:checked + .handle {
+  left: 1.75rem !important;
+  scale: 1.5 !important;
+  background-color: var(--m3c-on-primary) !important;
+}
+
+.m3-container > input[type="checkbox"][role="switch"]:checked ~ .hover {
+  left: 2.25rem !important;
+}
