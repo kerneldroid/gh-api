@@ -4,5 +4,6 @@ import { functionsMixins } from 'vite-plugin-functions-mixins'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/gh-api/',
   plugins: [svelte(), functionsMixins({ deps: ['m3-svelte'] })],
 })
